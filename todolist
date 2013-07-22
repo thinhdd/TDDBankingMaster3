@@ -1,0 +1,8 @@
+1. lấy 1 tài khoản đã tồn tại trong csdl
+2. lấy 1 tài khoản không tồn tại trong csdl trả về null
+3. save một tài khoản mới vào csdl
+4. save(update) một tài khoản đã tồn tại trong csdl.
+5. Test save transaction.
+6. Test lấy tất cả các transaction
+7. Test lấy n transaction
+8. Test lấy transaction trong một khoảng time

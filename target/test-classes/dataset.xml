@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+    <bank_account id="1" account_number="0123456789" balance="100" open_time_stamp="12345678"/>
+    <transaction account_number='0123456789' open_time_stamp='123456' amount='100' description="Them 100k" state="true"/>
+    <transaction account_number='0123456789' open_time_stamp='1234567' amount='50' description="Rut 50k" state="false"/>
+</dataset>

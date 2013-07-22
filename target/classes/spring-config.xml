@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
+
+    <bean id="placeholderConfig"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location" value="classpath:db.properties"/>
+    </bean>
+
+    <bean id="bankAccountDAO" class="com.qsoft.banking.persistence.dao.impl.BankAccountDAOImpl" scope="prototype"/>
+    <bean id="transactionDAO" class="com.qsoft.banking.persistence.dao.impl.TransactionDAOImpl"/>
+
+    <!--<bean id="bankAccountService" class="com.qsoft.banking.bussiness.impl.BankAccountImpl"/>-->
+
+    <bean id="entityManagerFactory"
+          class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <!--p:dataSource-ref="dataSource">-->
+        <property name="packagesToScan" value="com.qsoft.banking.persistence.model"/>
+        <property name="dataSource" ref="dataSource"/>
+        <property name="persistenceUnitName" value="NewPersistenceUnit"/>
+        <property name="persistenceXmlLocation" value="META-INF/persistence.xml"/>
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"></bean>
+        </property>
+    </bean>
+
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="${db.driver}"/>
+        <!--using postgres driver-->
+        <property name="url" value="${db.url}"/>
+        <property name="username" value="${db.username}"/>
+        <property name="password" value="${db.password}"/>
+
+    </bean>
+    <!--<bean-->
+    <!--class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">-->
+    <!--<property name="locations">-->
+    <!--<list>-->
+    <!--<value>db.properties</value>-->
+    <!--</list>-->
+    <!--</property>-->
+    <!--<property name="ignoreResourceNotFound" value="true"/>-->
+    <!--</bean>-->
+
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+    <tx:annotation-driven/>
+    <context:component-scan base-package="com.qsoft"  />
+
+</beans>
